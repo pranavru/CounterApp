@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Component create a snapshot 1`] = `
+<div
+  data-test="component-app"
+>
+  <h1>
+    Learn React
+  </h1>
+  <p>
+    Count:
+    0
+  </p>
+  <button
+    className=""
+    onClick={[Function]}
+    type="button"
+  >
+    Increment
+  </button>
+  <button
+    className=""
+    onClick={[Function]}
+    type="button"
+  >
+    Decrement
+  </button>
+</div>
+`;

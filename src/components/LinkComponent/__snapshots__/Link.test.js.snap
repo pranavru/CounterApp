@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link Component: Link changes the class when hovered 1`] = `
+Array [
+  <a
+    className="normal"
+    href="http://www.facebook.com"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    Facebook
+  </a>,
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    Counter
+    <span>
+      0
+    </span>
+  </button>,
+]
+`;
+
+exports[`Link Component: Link changes the class when hovered 2`] = `
+<a
+  className="hovered"
+  href="http://www.facebook.com"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  Facebook
+</a>
+`;
+
+exports[`Link Component: Link changes the class when hovered 3`] = `
+<a
+  className="normal"
+  href="http://www.facebook.com"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  Facebook
+</a>
+`;
