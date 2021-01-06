@@ -1,29 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App Component create a snapshot 1`] = `
+exports[`App Component Create an App.js snapshot 1`] = `
 <div
+  className="App"
   data-test="component-app"
 >
   <h1>
     Learn React
   </h1>
-  <p>
+  <p
+    data-test="counter-display"
+  >
     Count:
-    0
+    <span
+      data-test="counter-value"
+    >
+      0
+    </span>
   </p>
   <button
     className=""
+    data-test="increment-button"
+    name=""
     onClick={[Function]}
     type="button"
   >
-    Increment
+    Incrementer
   </button>
   <button
     className=""
+    data-test="decrement-button"
+    name=""
     onClick={[Function]}
     type="button"
   >
-    Decrement
+    Decrementer
   </button>
+  <div>
+    <p
+      className="noErrorMessage"
+      data-test="err-message"
+    >
+      Error: Unable to Decrement the counter.
+    </p>
+  </div>
 </div>
 `;

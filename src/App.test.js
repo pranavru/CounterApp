@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-filename-extension */
 // src/App.test.js
 
@@ -18,45 +19,54 @@ describe('App Component', () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it('renders test with shallow & data-test without crashing', () => {
-    const wrapper = shallow(<App />);
-    const componentApp = wrapper.find("[data-test='component-app']");
-    componentApp.debug();
-    expect(componentApp.length).toBe(1);
+  /**
+   * Factory function to create a ShallowWrapper for the App Component
+   * @function setup
+   * @param  {} =>shallow(<App/>
+   * @returns {ShallowWrapper}
+   */
+  const setup = () => shallow(<App />);
+
+  const findByTestAttribute = (wrapper, val) => wrapper.find(`[data-test='${val}']`);
+
+  const buttonClickToCheckText = (wrapper, btnType, displayType) => {
+    const btn = findByTestAttribute(wrapper, btnType);
+    btn.simulate('click');
+    const text = findByTestAttribute(wrapper, displayType).text();
+    return text;
+  };
+
+  describe('Incrementer', () => {
+    test('should render increment button', () => expect(findByTestAttribute(setup(), 'increment-button').length).toBe(1));
+    test('should perform User Interaction to increment Count by 1', () => expect(buttonClickToCheckText(setup(), 'increment-button', 'counter-display')).toEqual('Count:1'));
   });
 
-  test('should add', () => {
-    expect(2 + 2).toBe(4);
+  describe('Decrementer', () => {
+    test('should render decrement button', () => expect(findByTestAttribute(setup(), 'decrement-button').length).toBe(1));
+    test('should perform User Interaction to decrement Count by 1', () => {
+      const wrapper = setup();
+
+      // Increments the count by 1
+      // Then decrement it to check if the decrementer syntax is working or no.
+      findByTestAttribute(wrapper, 'increment-button').simulate('click');
+      expect(buttonClickToCheckText(wrapper, 'decrement-button', 'counter-display')).toEqual('Count:0');
+    });
+    test('should alert the user if counter decrementer < 0', () => { });
   });
 
-  test('should initialize the counter to zero', () => {
-    const wrapper = shallow(<App />);
-    const textField = wrapper.find('p').text();
-    expect(textField).toBe('Count:0');
+  describe('Counter Value', () => {
+    test('should render counter display', () => expect(findByTestAttribute(setup(), 'counter-display').text()).toEqual('Count:0'));
   });
 
-  // Using Enzyme shallow
-  test('should perform User Interaction to update Count by 1', () => {
-    const wrapper = shallow(<App />);
-    const incrementBtn = wrapper.find('ButtonComponent.increment');
-    incrementBtn.simulate('click');
-    const text = wrapper.find('p').text();
-    expect(text).toEqual('Count:1');
+  describe('Error Message', () => {
+    test('should render the error message box', () => expect(findByTestAttribute(setup(), 'err-message').length).toBe(1));
+    test('should display the error message if counter is decremented when the value is zero', () => expect(findByTestAttribute(setup(), 'err-message').text()).toEqual('Error: Unable to Decrement the counter.'));
+    test('should clear the error message on clicking incrementer', () => {
+      findByTestAttribute(setup(), 'increment-button').simulate('click');
+      expect(findByTestAttribute(setup(), 'err-message').hasClass('noErrorMessage')).toBe(true);
+    });
   });
 
-  test('decrements count by 1 when the decrement button is clicked', () => {
-    const wrapper = shallow(<App />);
-    const decrementBtn = wrapper.find('ButtonComponent.decrement');
-    decrementBtn.simulate('click');
-    const text = wrapper.find('p').text();
-    expect(text).toEqual('Count:-1');
-  });
-
-  test('create a snapshot', () => {
-    const component = renderer.create(<App />);
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+  test('should render app without crashing', () => expect(findByTestAttribute(setup(), 'component-app').length).toBe(1));
+  test('Create an App.js snapshot', () => expect(renderer.create(<App />).toJSON()).toMatchSnapshot());
 });
-
-// .mockImplementation((num) => (wrapper.setState({ count: wrapper.state('count') + (num * 10) })))
